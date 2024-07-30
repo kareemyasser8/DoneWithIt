@@ -8,6 +8,7 @@ import Screen from "@/components/Screen"
 import Icon from "@/components/Icon"
 import ListItem from "@/components/ListItem"
 import AccountScreen from "./account"
+import ListingScreen from "./listing"
 
 export default function HomeScreen() {
   // return <WelcomeScreen />
@@ -19,7 +20,7 @@ export default function HomeScreen() {
     //     ImageComponent={<Icon size={50} iconName={"email"} />}
     //   />
     // </Screen>
-    <AccountScreen/>
+    <ListingScreen/>
   )
 
   // <View style={{ backgroundColor: "#f8f4f4", padding: 20, paddingTop: 100 }}>

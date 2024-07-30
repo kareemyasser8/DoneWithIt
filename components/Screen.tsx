@@ -1,10 +1,15 @@
 import { StyleSheet, Text, View } from "react-native"
-import React, { PropsWithChildren } from "react"
+import React, { PropsWithChildren, ReactNode } from "react"
 import Constants from "expo-constants"
 
+interface Props{
+  children: ReactNode,
+  style?: any
+}
+
 const paddingTop = Constants.statusBarHeight
-const Screen = ({ children }: PropsWithChildren) => {
-  return <View style={styles.screen}>{children}</View>
+const Screen = ({ children, style }: Props) => {
+  return <View style={[styles.screen, style]}>{children}</View>
 }
 
 export default Screen
