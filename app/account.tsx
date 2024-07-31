@@ -59,6 +59,7 @@ const AccountScreen = () => {
             <Icon iconName="logout" backgroundColor="yellow"/>
         }
       />
+
     </Screen>
   )
 }

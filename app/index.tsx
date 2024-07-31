@@ -1,33 +1,31 @@
-import { View } from "react-native"
-import WelcomeScreen from "./welcome"
-import ListingDetailsScreen from "./listingDetails"
-import Card from "@/components/Card"
-import ViewImageScreen from "./viewImage"
-import MessagesScreen from "./messages"
+import AppPicker from "@/components/AppPicker"
+import AppTextInput from "@/components/AppTextInput"
 import Screen from "@/components/Screen"
-import Icon from "@/components/Icon"
-import ListItem from "@/components/ListItem"
-import AccountScreen from "./account"
+import { useState } from "react"
 import ListingScreen from "./listing"
+import AccountScreen from "./account"
+
+const categories = [
+  { label: "Furniture", value: 1 },
+  { label: "Clothing", value: 2 },
+  { label: "Cameras", value: 3 },
+]
 
 export default function HomeScreen() {
-  // return <WelcomeScreen />
+  const [category, setCategory] = useState()
 
   return (
-    // <Screen>
-    //   <ListItem
-    //     title="My title"
-    //     ImageComponent={<Icon size={50} iconName={"email"} />}
-    //   />
-    // </Screen>
-    <ListingScreen/>
-  )
+    <>
+      {/* <AppPicker
+      selectedItem={category}
+      onSelectItem={(item) => setCategory(item)}
+      items={categories}
+      placeholder="Category"
+      icon="apps"
+      />
+      <AppTextInput placeholder="Email" icon="email" /> */}
 
-  // <View style={{ backgroundColor: "#f8f4f4", padding: 20, paddingTop: 100 }}>
-  //   <Card
-  //     title="Red jacket for sales"
-  //     subTitle="$100"
-  //     image={require("@/assets/images/jacket.jpg")}
-  //   />
-  // </View>
+      <AccountScreen />
+    </>
+  )
 }

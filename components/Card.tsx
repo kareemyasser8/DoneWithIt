@@ -1,6 +1,8 @@
-import { View, Text, StyleSheet, Image } from "react-native"
-import React from "react"
-import colors from "@/app/config/colors"
+import colors from '@/app/config/colors';
+import React from 'react';
+import { Image, StyleSheet, View } from 'react-native';
+
+import AppText from './AppText';
 
 interface Props {
   title: string
@@ -13,8 +15,8 @@ const Card = ({title, subTitle, image}: Props) => {
     <View style={styles.card}>
         <Image source={image} style={styles.cardImage}/>
         <View style ={styles.detailsContainer}> 
-            <Text style={styles.title}>{title}</Text>
-            <Text style={styles.subTitle}>{subTitle}</Text>
+            <AppText style={styles.title}>{title}</AppText>
+            <AppText style={styles.subTitle}>{subTitle}</AppText>
         </View>
     </View>
   )

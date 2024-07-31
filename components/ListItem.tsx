@@ -1,6 +1,14 @@
-import colors from '@/app/config/colors';
-import React from 'react';
-import { Image, ImageSourcePropType, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import colors from "@/app/config/colors"
+import React from "react"
+import {
+  Image,
+  ImageSourcePropType,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  View,
+} from "react-native"
+import AppText from "./AppText"
 
 interface Props {
   title: string
@@ -24,8 +32,8 @@ const ListItem = ({
           {IconComponent}
           {image && <Image style={styles.image} source={image} />}
           <View style={styles.textContainer}>
-            <Text style={styles.title}>{title}</Text>
-            {subTitle && <Text style={styles.subTitle}>{subTitle}</Text>}
+            <AppText style={styles.title}>{title}</AppText>
+            {subTitle && <AppText style={styles.subTitle}>{subTitle}</AppText>}
           </View>
         </View>
       </View>
@@ -40,7 +48,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingVertical: 15,
-    backgroundColor: colors.white
+    backgroundColor: colors.white,
   },
   detailsContainer: {
     display: "flex",
