@@ -7,5 +7,10 @@ export default {
     light: "#DCDCDC",
     dark: "#0c0c0c",
     danger: "#F42929",
-    yellow: "#ffe66d"
+    yellow: "#ffe66d",
+    orange: "#FFA500",
+    green: "#008000",
+    lightBlue: "#ADD8E6",
+    darkBlue: "#00008B",
+    purple: "#800080"
 }

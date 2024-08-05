@@ -9,6 +9,9 @@ import {
   SubmitButton,
 } from "@/components/forms"
 import Screen from "@/components/Screen"
+import CategoryPickerItem from "@/components/CategoryPickerItem"
+import { ColorKeys } from "@/components/AppButton"
+import { MaterialIconName } from "@/components/Icon"
 
 const schema = Yup.object().shape({
   title: Yup.string().required().min(1).label("Title"),
@@ -17,10 +20,53 @@ const schema = Yup.object().shape({
   category: Yup.string().required().nullable().label("Category"),
 })
 
-const categories = [
-  { label: "Furniture", value: 1 },
-  { label: "Clothing", value: 2 },
-  { label: "Camera", value: 3 },
+export interface CategoryItem {
+  label: string
+  value: number
+  backgroundColor: ColorKeys
+  iconName: MaterialIconName
+}
+
+const categories: CategoryItem[] = [
+  {
+    label: "Furniture",
+    value: 1,
+    backgroundColor: "primary",
+    iconName: "lamp",
+  },
+  {
+    label: "Cars",
+    value: 2,
+    backgroundColor: "orange",
+    iconName: "car",
+  },
+  { label: "Cameras", value: 3, backgroundColor: "yellow", iconName: "camera" },
+  { label: "Games", value: 4, backgroundColor: "green", iconName: "cards" },
+  {
+    label: "Clothing",
+    value: 5,
+    backgroundColor: "secondary",
+    iconName: "shoe-heel",
+  },
+  {
+    label: "Sports",
+    value: 6,
+    backgroundColor: "lightBlue",
+    iconName: "basketball",
+  },
+  {
+    label: "Movies & Music",
+    value: 7,
+    backgroundColor: "darkBlue",
+    iconName: "headset",
+  },
+  { label: "Books", value: 8, backgroundColor: "purple", iconName: "book" },
+  {
+    label: "Others",
+    value: 9,
+    backgroundColor: "dark",
+    iconName: "screen-rotation",
+  },
 ]
 
 type FormData = Yup.InferType<typeof schema>
@@ -53,6 +99,8 @@ const ListingEditingScreen = () => {
           name="category"
           placeholder="Category"
           width="50%"
+          numberOfColumns={3}
+          PickerItemComponent={CategoryPickerItem}
         />
 
         <AppFormField

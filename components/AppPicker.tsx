@@ -1,6 +1,6 @@
 import colors from "@/app/config/colors"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
-import React, { useState } from "react"
+import React, { Component, useState } from "react"
 import {
   Button,
   DimensionValue,
@@ -15,13 +15,16 @@ import { MaterialIconName } from "./Icon"
 import PickerItem from "./PickerItem"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import AppText from "./AppText"
+import { CategoryItem } from "@/app/listingEditing"
 
 interface Props {
   icon?: MaterialIconName
-  items: any[]
+  items: {label: string, value: number}[] | CategoryItem[]
   width?: DimensionValue
+  PickerItemComponent?: React.ComponentType<any>,
   selectedItem: string
   onSelectItem: (item: any) => void
+  numberOfColumns?: number,
   placeholder: string
 }
 
@@ -29,6 +32,8 @@ const AppPicker = ({
   icon,
   items,
   placeholder,
+  PickerItemComponent = PickerItem,
+  numberOfColumns = 1,
   selectedItem,
   onSelectItem,
   width = "100%",
@@ -66,9 +71,10 @@ const AppPicker = ({
           <FlatList
             data={items}
             keyExtractor={(item) => item.value.toString()}
+            numColumns={numberOfColumns}
             renderItem={({ item }) => (
-              <PickerItem
-                label={item.label}
+              <PickerItemComponent
+                item={item}
                 onPress={() => {
                   onSelectItem(item.label)
                   setModalVisible(false)

@@ -1,16 +1,19 @@
-import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import AppText from './AppText';
+import React from "react"
+import { StyleSheet, TouchableOpacity } from "react-native"
+import AppText from "./AppText"
 
 interface Props {
-  label: string
+  item: {
+    label: string
+    value: number
+  }
   onPress: () => void
 }
 
-const PickerItem = ({ label, onPress }: Props) => {
+const PickerItem = ({ item, onPress }: Props) => {
   return (
     <TouchableOpacity onPress={onPress}>
-      <AppText style={styles.text}>{label}</AppText>
+      <AppText style={styles.text}>{item.label}</AppText>
     </TouchableOpacity>
   )
 }
