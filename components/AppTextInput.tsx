@@ -1,18 +1,23 @@
-import { StyleSheet, Text, View, TextInput, Platform } from "react-native"
-import { MaterialCommunityIcons } from "@expo/vector-icons"
-import React from "react"
 import colors from "@/app/config/colors"
 import defaultStyles from "@/app/config/styles"
+import { MaterialCommunityIcons } from "@expo/vector-icons"
+import React from "react"
+import { DimensionValue, StyleSheet, TextInput, TextInputProps, View } from "react-native"
+
 import { MaterialIconName } from "./Icon"
 
-interface Props {
+interface Props extends TextInputProps {
   icon?: MaterialIconName
-  [key: string]: any
+  width?: DimensionValue | undefined
 }
 
-const AppTextInput = ({ icon, ...rest }: Props) => {
+let containerWidth
+
+const AppTextInput = ({ icon, width = "100%", ...rest }: Props) => {
+  containerWidth = width
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { width }]}>
       {icon && (
         <MaterialCommunityIcons
           name={icon}
@@ -21,7 +26,11 @@ const AppTextInput = ({ icon, ...rest }: Props) => {
           style={styles.icon}
         />
       )}
-      <TextInput style={defaultStyles.text} {...rest} />
+      <TextInput
+        placeholderTextColor={colors.medium}
+        style={defaultStyles.text}
+        {...rest}
+      />
     </View>
   )
 }

@@ -1,14 +1,15 @@
-import colors from "@/app/config/colors"
 import React from "react"
+import { MaterialCommunityIcons } from "@expo/vector-icons"
 import {
   Image,
   ImageSourcePropType,
   StyleSheet,
-  Text,
   TouchableHighlight,
   View,
 } from "react-native"
+
 import AppText from "./AppText"
+import colors from "@/app/config/colors"
 
 interface Props {
   title: string
@@ -32,10 +33,11 @@ const ListItem = ({
           {IconComponent}
           {image && <Image style={styles.image} source={image} />}
           <View style={styles.textContainer}>
-            <AppText style={styles.title}>{title}</AppText>
-            {subTitle && <AppText style={styles.subTitle}>{subTitle}</AppText>}
+            <AppText numberOfLines={1}  style={styles.title}>{title}</AppText>
+            {subTitle && <AppText numberOfLines={3} style={styles.subTitle}>{subTitle}</AppText>}
           </View>
         </View>
+        <MaterialCommunityIcons color={colors.medium} style={{marginRight: 5}} name="chevron-right" size={25}/>
       </View>
     </TouchableHighlight>
   )
@@ -52,12 +54,14 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     display: "flex",
+    flex: 1,
     flexDirection: "row",
     paddingHorizontal: 10,
     height: "auto",
   },
   textContainer: {
     display: "flex",
+    flex: 1,
     flexDirection: "column",
     justifyContent: "center",
     gap: 5,

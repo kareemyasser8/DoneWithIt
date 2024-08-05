@@ -3,6 +3,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons"
 import React, { useState } from "react"
 import {
   Button,
+  DimensionValue,
   FlatList,
   Modal,
   StyleSheet,
@@ -18,7 +19,8 @@ import AppText from "./AppText"
 interface Props {
   icon?: MaterialIconName
   items: any[]
-  selectedItem: any
+  width?: DimensionValue
+  selectedItem: string
   onSelectItem: (item: any) => void
   placeholder: string
 }
@@ -29,13 +31,14 @@ const AppPicker = ({
   placeholder,
   selectedItem,
   onSelectItem,
+  width = "100%",
 }: Props) => {
   const [modalVisible, setModalVisible] = useState(false)
 
   return (
     <>
       <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
-        <View style={styles.container}>
+        <View style={[styles.container, { width }]}>
           {icon && (
             <MaterialCommunityIcons
               name={icon}
@@ -44,9 +47,11 @@ const AppPicker = ({
               style={styles.icon}
             />
           )}
-          <AppText style={styles.text}>
-            {selectedItem ? selectedItem : placeholder}
-          </AppText>
+          {selectedItem ? (
+            <AppText style={styles.text}>{selectedItem}</AppText>
+          ) : (
+            <AppText style={styles.placeholder}>{placeholder}</AppText>
+          )}
           <MaterialCommunityIcons
             name="chevron-down"
             size={20}
@@ -90,6 +95,10 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 10,
+  },
+  placeholder: {
+    color: colors.medium,
+    flex: 1,
   },
   text: {
     flex: 1,

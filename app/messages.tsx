@@ -11,20 +11,20 @@ const MessagesScreen = () => {
   const [messages, setMessages] = useState<any[]>([
     {
       id: 1,
-      title: "T1",
-      description: "D1",
+      title: "Mosh Hamedani",
+      description: "Hey! Is this item still available?",
       image: require("@/assets/images/mosh.jpg"),
     },
     {
       id: 2,
-      title: "T2",
-      description: "D2",
+      title: "Mosh Hamedani",
+      description: "I am interested in this item, When will you be able to post it?",
       image: require("@/assets/images/mosh.jpg"),
     },
     {
       id: 3,
-      title: "T3",
-      description: "D3",
+      title: "Mosh Hamedani",
+      description: "Kareem, please answer me my mentor",
       image: require("@/assets/images/mosh.jpg"),
     },
   ])
