@@ -1,11 +1,15 @@
-import AppButton from '@/components/AppButton';
-import { router } from 'expo-router';
-import React from 'react';
-import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
+import AppButton from "@/components/AppButton"
+import { router } from "expo-router"
+import React from "react"
+import { Image, ImageBackground, StyleSheet, Text, View } from "react-native"
 
 const WelcomeScreen = () => {
-  const navigateToViewImagePage = () => {
-    router.push("/viewImage")
+  const navigateToRegisterPage = () => {
+    router.navigate("/register")
+  }
+
+  const navigateToLoginPage = () => {
+    router.navigate("/login")
   }
 
   return (
@@ -22,8 +26,12 @@ const WelcomeScreen = () => {
         <Text style={styles.tagLine}>Sell what you don't need</Text>
       </View>
       <View style={styles.buttonsContainer}>
-        <AppButton title="login" onPress={() => console.log("tapped")} />
-        <AppButton title="register" color={"secondary"} onPress={navigateToViewImagePage} />
+        <AppButton title="login" onPress={navigateToLoginPage} />
+        <AppButton
+          title="register"
+          color={"secondary"}
+          onPress={navigateToRegisterPage}
+        />
       </View>
     </ImageBackground>
   )
@@ -35,11 +43,11 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
   },
-  buttonsContainer:{
+  buttonsContainer: {
     width: "100%",
     paddingHorizontal: 20,
     gap: 10,
-    marginBottom: 30
+    marginBottom: 30,
   },
   logoContainer: {
     position: "absolute",
@@ -51,10 +59,10 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
   },
-  tagLine:{
+  tagLine: {
     fontSize: 25,
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
 })
 
 export default WelcomeScreen

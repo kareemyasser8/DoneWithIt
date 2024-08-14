@@ -15,7 +15,7 @@ import { MaterialIconName } from "./Icon"
 import PickerItem from "./PickerItem"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import AppText from "./AppText"
-import { CategoryItem } from "@/app/listingEditing"
+import { CategoryItem } from "@/app/(tabs)/listingEditing"
 
 interface Props {
   icon?: MaterialIconName

@@ -1,4 +1,4 @@
-import { CategoryItem } from "@/app/listingEditing"
+import { CategoryItem } from "@/app/(tabs)/listingEditing"
 import React from "react"
 import { StyleSheet, TouchableOpacity, View } from "react-native"
 

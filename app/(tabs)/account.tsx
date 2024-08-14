@@ -3,7 +3,7 @@ import React from "react"
 import Screen from "@/components/Screen"
 import ListItem from "@/components/ListItem"
 import Icon, { MaterialIconName } from "@/components/Icon"
-import colors from "./config/colors"
+import colors from "../config/colors"
 import { ColorKeys } from "@/components/AppButton"
 import ListItemSeparator from "@/components/ListItemSeparator"
 

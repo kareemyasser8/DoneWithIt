@@ -1,38 +1,48 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import Icon from "@/components/Icon"
+import TabIcon from "@/components/TabIcon"
+import { Tabs } from "expo-router"
 
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import colors from "../config/colors"
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
-  return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+const TabsLayout = () => (
+  <Tabs
+    screenOptions={{
+      tabBarActiveTintColor: colors.primary,
+      headerTintColor: colors.primary,
+      headerTitleStyle: { fontWeight: "bold" },
+    }}
+  >
+    <Tabs.Screen
+      name="index"
+      options={{
+        title: "Feed",
         headerShown: false,
-        tabBarShowLabel: false
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
-          ),
-        }}
-      />
-    </Tabs>
-  );
-}
+        tabBarIcon: ({ focused }) => <TabIcon focused={focused} name="home" />,
+      }}
+    />
+
+    <Tabs.Screen
+      name="listingEditing"
+      options={{
+        headerShown: false,
+        title: "",
+        tabBarIcon: () => (
+          <Icon backgroundColor={"primary"} iconName="plus"></Icon>
+        ),
+      }}
+    />
+
+    <Tabs.Screen
+      name="account"
+      options={{
+        title: "Account",
+        headerShown: false,
+        tabBarIcon: ({ focused }) => (
+          <TabIcon focused={focused} name="account" />
+        ),
+      }}
+    />
+  </Tabs>
+)
+
+export default TabsLayout

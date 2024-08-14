@@ -1,8 +1,9 @@
-import { FlatList, StyleSheet, Text, View } from "react-native"
-import React from "react"
-import Screen from "@/components/Screen"
-import Card from "@/components/Card"
-import colors from "./config/colors"
+import colors from '@/app/config/colors';
+import Card from '@/components/Card';
+import Screen from '@/components/Screen';
+import { router } from 'expo-router';
+import React from 'react';
+import { FlatList, StyleSheet } from 'react-native';
 
 const ListingScreen = () => {
   const listings = [
@@ -11,12 +12,14 @@ const ListingScreen = () => {
       title: "Red Jacket for sale",
       price: 100,
       image: require("@/assets/images/jacket.jpg"),
+      imageToRender: "jacket",
     },
     {
       id: 2,
       title: "Couch in great codition",
       price: 1000,
       image: require("@/assets/images/couch.jpg"),
+      imageToRender: "couch",
     },
   ]
 
@@ -28,6 +31,9 @@ const ListingScreen = () => {
         renderItem={({ item }) => (
           <Card
             title={item.title}
+            onPress={() =>
+              router.navigate({ pathname: "/[listDetails]", params: item })
+            }
             subTitle={"$" + item.price}
             image={item.image}
           />
@@ -40,8 +46,8 @@ const ListingScreen = () => {
 export default ListingScreen
 
 const styles = StyleSheet.create({
-    screen: {
-        padding: 20,
-        backgroundColor: colors.light
-    }
+  screen: {
+    padding: 20,
+    backgroundColor: colors.light,
+  },
 })
