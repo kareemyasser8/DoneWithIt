@@ -1,7 +1,13 @@
-import ListingScreen from "../(listings)/listing"
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import ListingScreen from './(listings)'
 
-const App = () => {
-    return <ListingScreen/>
+const index = () => {
+  return (
+    <ListingScreen/>
+  )
 }
 
-export default App
+export default index
+
+const styles = StyleSheet.create({})

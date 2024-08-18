@@ -32,7 +32,7 @@ const ListingScreen = () => {
           <Card
             title={item.title}
             onPress={() =>
-              router.navigate({ pathname: "/[listDetails]", params: item })
+              router.push({ pathname: "/[listDetails]", params: item })
             }
             subTitle={"$" + item.price}
             image={item.image}

@@ -12,7 +12,11 @@ import ListItem from "@/components/ListItem"
 import { useLocalSearchParams, useRouter } from "expo-router"
 
 const ListingDetailsScreen = () => {
-  const listing = useLocalSearchParams()
+  const listing = useLocalSearchParams<{
+    imageToRender: string
+    title: string
+    price: string
+  }>()
 
   const imageLookup: { [key: string]: ImageSourcePropType } = {
     jacket: require("@/assets/images/jacket.jpg"),
