@@ -1,4 +1,10 @@
-import { DimensionValue, StyleSheet, Text, TextInputProps, View } from "react-native"
+import {
+  DimensionValue,
+  StyleSheet,
+  Text,
+  TextInputProps,
+  View,
+} from "react-native"
 import React from "react"
 import { useFormikContext } from "formik"
 
@@ -13,7 +19,7 @@ interface Props extends TextInputProps {
 }
 
 const AppFormField = ({ name, width, icon, ...rest }: Props) => {
-  const { setFieldTouched, handleChange, errors, touched } =
+  const { setFieldTouched, setFieldValue, values, errors, touched } =
     useFormikContext<any>()
 
   return (
@@ -22,8 +28,9 @@ const AppFormField = ({ name, width, icon, ...rest }: Props) => {
         icon={icon}
         {...rest}
         width={width}
+        value={values[name]}
         onBlur={() => setFieldTouched(name)}
-        onChangeText={handleChange(name)}
+        onChangeText={(text) => setFieldValue(name, text)}
       />
       {<ErrorMessage visibile={touched[name]} error={errors[name]} />}
     </>

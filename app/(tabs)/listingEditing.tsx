@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native"
 import React, { useEffect, useState } from "react"
 import * as Yup from "yup"
-
+import formik from "formik"
 
 import {
   AppForm,
@@ -15,6 +15,9 @@ import { ColorKeys } from "@/components/AppButton"
 import { MaterialIconName } from "@/components/Icon"
 import FormImagePicker from "@/components/forms/FormImagePicker"
 import useLocation from "@/hooks/useLocation"
+import useAddListing from "@/hooks/useAddListing"
+import UploadScreen from "./uploadScreen"
+import { AxiosProgressEvent } from "axios"
 
 const schema = Yup.object().shape({
   title: Yup.string().required().min(1).label("Title"),
@@ -73,13 +76,48 @@ const categories: CategoryItem[] = [
   },
 ]
 
-type FormData = Yup.InferType<typeof schema>
+export interface ListingForm {
+  category: any
+  description: string
+  images: string[]
+  price: string
+  title: string
+  location?: Object
+}
 
 const ListingEditingScreen = () => {
-  const location = useLocation();
+  const location = useLocation()
+  const { addListing } = useAddListing()
+
+  const [uploadScreenVisible, setUploadScreenVisible] = useState(false)
+  const [progress, setProgress] = useState(0)
+
+  const handleUploadProgress = (progressEvent: AxiosProgressEvent) => {
+    setProgress(0)
+    setUploadScreenVisible(true)
+    if (progressEvent.lengthComputable && progressEvent.total) {
+      setProgress(Math.round(progressEvent.loaded / progressEvent.total))
+      console.log(progress)
+    } else {
+      console.log(`Upload Progress: Unknown`)
+    }
+  }
+
+  const handleSubmit = async (
+    listing: ListingForm,
+    { resetForm }: formik.FormikHelpers<any>
+  ) => {
+    await addListing({ ...listing, location }, handleUploadProgress)
+    resetForm()
+  }
 
   return (
     <Screen style={styles.container}>
+      <UploadScreen
+        onDone={() => setUploadScreenVisible(false)}
+        progress={progress}
+        visible={uploadScreenVisible}
+      />
       <AppForm
         initialValues={{
           title: "",
@@ -88,7 +126,7 @@ const ListingEditingScreen = () => {
           category: null,
           images: [],
         }}
-        onSubmit={(values) => console.log(location)}
+        onSubmit={handleSubmit}
         validationSchema={schema}
       >
         <FormImagePicker name="images" />

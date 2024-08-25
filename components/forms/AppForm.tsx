@@ -1,9 +1,9 @@
-import { Formik } from 'formik';
+import { Formik, FormikHelpers, FormikState } from 'formik';
 import React, { ReactNode } from 'react';
 import * as Yup from 'yup';
 interface Props {
   initialValues: any
-  onSubmit: (values: any) => void
+  onSubmit: (values: any, formikHelpers: FormikHelpers<any>) => void
   validationSchema: Yup.ObjectSchema<any>
   children: ReactNode
 }

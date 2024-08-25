@@ -28,9 +28,11 @@ const AppFormPicker = ({
     <>
       <AppPicker
         items={items}
-        onSelectItem={(item) => setFieldValue(name, item)}
+        onSelectItem={(item) => {
+          setFieldValue(name, JSON.stringify(item))
+        }}
         placeholder={placeholder}
-        selectedItem={values[name]}
+        selectedItem={JSON.parse(values[name])?.label}
         width={width}
         numberOfColumns={numberOfColumns}
         PickerItemComponent={PickerItemComponent}

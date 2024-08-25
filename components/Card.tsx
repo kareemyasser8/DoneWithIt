@@ -7,15 +7,15 @@ import AppText from "./AppText"
 interface Props {
   title: string
   subTitle: string
-  image: ImageSourcePropType | undefined
+  imageUrl: string
   onPress: () => void
 }
 
-const Card = ({ title, subTitle, image, onPress }: Props) => {
+const Card = ({ title, subTitle, imageUrl, onPress }: Props) => {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.card}>
-        <Image source={image} style={styles.cardImage} />
+        <Image source={{uri: imageUrl}} style={styles.cardImage} />
         <View style={styles.detailsContainer}>
           <AppText style={styles.title}>{title}</AppText>
           <AppText style={styles.subTitle}>{subTitle}</AppText>

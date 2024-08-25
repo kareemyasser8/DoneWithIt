@@ -1,12 +1,10 @@
 import React from "react"
 import { StyleSheet, TouchableOpacity } from "react-native"
 import AppText from "./AppText"
+import { CategoryItem } from "@/app/(tabs)/listingEditing"
 
 interface Props {
-  item: {
-    label: string
-    value: number
-  }
+  item: CategoryItem
   onPress: () => void
 }
 

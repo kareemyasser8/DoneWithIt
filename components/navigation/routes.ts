@@ -1,6 +1,7 @@
 const routes = Object.freeze({
   tabs: "(tabs)",
   listings: "(listings)",
+  uploadScreen: "uploadScreen",
   listingDetails: "[listDetails]",
   account: "account",
   listEditing: "listingEditing",

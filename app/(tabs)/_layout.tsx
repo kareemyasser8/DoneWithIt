@@ -63,6 +63,14 @@ const TabsLayout = () => {
           href: null,
         }}
       />
+
+      <Tabs.Screen
+        name={routes.uploadScreen}
+        options={{
+          headerShown: false,
+          href: null,
+        }}
+      />
     </Tabs>
   )
 }

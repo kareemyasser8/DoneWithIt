@@ -17,13 +17,14 @@ import { GestureHandlerRootView } from "react-native-gesture-handler"
 import AppText from "./AppText"
 import { CategoryItem } from "@/app/(tabs)/listingEditing"
 
+
 interface Props {
   icon?: MaterialIconName
-  items: {label: string, value: number}[] | CategoryItem[]
+  items: CategoryItem[]
   width?: DimensionValue
   PickerItemComponent?: React.ComponentType<any>,
   selectedItem: string
-  onSelectItem: (item: any) => void
+  onSelectItem: (item: CategoryItem) => void
   numberOfColumns?: number,
   placeholder: string
 }
@@ -76,7 +77,7 @@ const AppPicker = ({
               <PickerItemComponent
                 item={item}
                 onPress={() => {
-                  onSelectItem(item.label)
+                  onSelectItem(item)
                   setModalVisible(false)
                 }}
               />

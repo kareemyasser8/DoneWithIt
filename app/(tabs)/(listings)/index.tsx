@@ -1,30 +1,29 @@
-import colors from '@/app/config/colors';
-import Card from '@/components/Card';
-import Screen from '@/components/Screen';
-import { router } from 'expo-router';
-import React from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import useListings from "@/hooks/useListings"
+import colors from "@/app/config/colors"
+import AppButton from "@/components/AppButton"
+import AppText from "@/components/AppText"
+import Card from "@/components/Card"
+import routes from "@/components/navigation/routes"
+import Screen from "@/components/Screen"
+import { router } from "expo-router"
+import React from "react"
+import { FlatList, StyleSheet } from "react-native"
+import ActivityIndicator from "@/components/ActivityIndicator"
 
 const ListingScreen = () => {
-  const listings = [
-    {
-      id: 1,
-      title: "Red Jacket for sale",
-      price: 100,
-      image: require("@/assets/images/jacket.jpg"),
-      imageToRender: "jacket",
-    },
-    {
-      id: 2,
-      title: "Couch in great codition",
-      price: 1000,
-      image: require("@/assets/images/couch.jpg"),
-      imageToRender: "couch",
-    },
-  ]
+  const { listings, isLoading, error, getListings } = useListings()
+
+  if (isLoading) return <ActivityIndicator visible={true} />
 
   return (
     <Screen style={styles.screen}>
+      {error && (
+        <>
+          <AppText>Couldn't retrieve the listings</AppText>
+          <AppButton title="Rety" onPress={getListings} />
+        </>
+      )}
+
       <FlatList
         data={listings}
         keyExtractor={(listing) => listing.id.toString()}
@@ -32,10 +31,13 @@ const ListingScreen = () => {
           <Card
             title={item.title}
             onPress={() =>
-              router.push({ pathname: "/[listDetails]", params: item })
+              router.push({
+                pathname: routes.listingDetails,
+                params: item.id as any,
+              })
             }
             subTitle={"$" + item.price}
-            image={item.image}
+            imageUrl={item.images[0].url || "https://placehold.co/600x400"}
           />
         )}
       />
