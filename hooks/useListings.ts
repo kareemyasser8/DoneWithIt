@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { List } from "@/app/api/listService"
-import listService from "@/app/api/listService"
+import listService, { listServiceEndPoint } from "@/app/api/listService"
+import cache from "@/utility/cache"
 
 const useListings = () => {
   const [listings, setListings] = useState<List[]>([])
@@ -12,13 +13,24 @@ const useListings = () => {
     setError(false)
 
     try {
-      const response = await listService.getAll()
-      setListings(response as List[])
+      const data = await cache.get(listServiceEndPoint)
+      if (data) {
+        setListings(data as List[])
+      } else {
+        try {
+          const response = await listService.getAll()
+          if (response) {
+            cache.store(listServiceEndPoint, response)
+            setListings(response as List[])
+          }
+        } catch (error) {
+          setError(true)
+        }
+      }
     } catch (error) {
       setError(true)
-    } finally {
-      setIsLoading(false)
     }
+    setIsLoading(false)
   }
 
   useEffect(() => {

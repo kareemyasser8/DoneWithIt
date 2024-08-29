@@ -1,14 +1,9 @@
-import Screen from "@/components/Screen"
-import { useNetInfo } from "@react-native-community/netinfo"
-import { Link } from "expo-router"
-import React from "react"
-import { Pressable, StyleSheet, Text, View } from "react-native"
+import Screen from '@/components/Screen';
+import { Link } from 'expo-router';
+import React from 'react';
+import { Pressable, StyleSheet, Text } from 'react-native';
 
 const index = () => {
-
-  // const netinfo = useNetInfo();
-  // console.log(JSON.stringify(netinfo, null, 2))
-
   return (
     <Screen>
       <Link href={"(tabs)"} asChild>

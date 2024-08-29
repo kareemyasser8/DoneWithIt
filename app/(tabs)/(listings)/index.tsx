@@ -33,7 +33,7 @@ const ListingScreen = () => {
             onPress={() =>
               router.push({
                 pathname: routes.listingDetails,
-                params: item.id as any,
+                params: { listing: JSON.stringify(item) },
               })
             }
             subTitle={"$" + item.price}

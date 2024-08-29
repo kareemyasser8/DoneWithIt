@@ -1,37 +1,22 @@
-import React from "react"
-import {
-  Image,
-  ImageSourcePropType,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native"
-import colors from "@/app/config/colors"
-
-import ListItem from "@/components/ListItem"
-import { useLocalSearchParams, useRouter } from "expo-router"
+import colors from '@/app/config/colors';
+import ListItem from '@/components/ListItem';
+import { useLocalSearchParams } from 'expo-router';
+import React from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
 
 const ListingDetailsScreen = () => {
-  const listing = useLocalSearchParams<{
-    imageToRender: string
-    title: string
-    price: string
-  }>()
-
-  const imageLookup: { [key: string]: ImageSourcePropType } = {
-    jacket: require("@/assets/images/jacket.jpg"),
-    couch: require("@/assets/images/couch.jpg"),
-  }
+  const { listing } = useLocalSearchParams()
+  const parsedListing = JSON.parse(listing as string)
 
   return (
     <View>
       <Image
         style={styles.image}
-        source={imageLookup[listing.imageToRender as string]}
+        source={{ uri: parsedListing?.images[0].url }}
       />
       <View style={styles.detailsContainer}>
-        <Text style={styles.title}>{listing.title}</Text>
-        <Text style={styles.price}>{listing.price}</Text>
+        <Text style={styles.title}>{parsedListing?.title}</Text>
+        <Text style={styles.price}>{parsedListing?.price}</Text>
         <View style={styles.userContainer}>
           <ListItem
             image={require("@/assets/images/mosh.jpg")}

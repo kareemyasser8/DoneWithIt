@@ -15,13 +15,13 @@ class APIClient<T> {
   }
 
   getAll() {
-    return axiosInstance.get<T[]>(this.endpoint).then((res) => {
-      if (res.data) {
-        return res.data
-      } else {
-        throw new Error(`Failed to fetch data: ${res}`)
-      }
-    })
+    return axiosInstance
+      .get<T[]>(this.endpoint)
+      .then((response) => response.data)
+      .catch((error) => {
+        console.log(error)
+        throw new Error("There is something wrong that happened")
+      })
   }
 
   post(

@@ -11,4 +11,7 @@ export interface List {
   location: { latitude: number; longitude: number }
 }
 
-export default new APIClient<List>("/listings")
+const listServiceEndPoint = "/listings"
+
+export { listServiceEndPoint }
+export default new APIClient<List>(listServiceEndPoint)
