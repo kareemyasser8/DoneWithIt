@@ -37,7 +37,7 @@ const AppFormPicker = ({
         numberOfColumns={numberOfColumns}
         PickerItemComponent={PickerItemComponent}
       />
-      <ErrorMessage error={errors[name]} visibile={touched[name]} />
+      <ErrorMessage error={errors[name]} visible={touched[name]} />
     </>
   )
 }

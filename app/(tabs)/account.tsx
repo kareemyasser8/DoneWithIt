@@ -1,11 +1,12 @@
-import { StyleSheet, Text, View, FlatList } from "react-native"
-import React from "react"
-import Screen from "@/components/Screen"
-import ListItem from "@/components/ListItem"
-import Icon, { MaterialIconName } from "@/components/Icon"
-import colors from "../config/colors"
 import { ColorKeys } from "@/components/AppButton"
+import Icon, { MaterialIconName } from "@/components/Icon"
+import ListItem from "@/components/ListItem"
 import ListItemSeparator from "@/components/ListItemSeparator"
+import Screen from "@/components/Screen"
+import useAuth from "@/auth/useAuth"
+import React from "react"
+import { FlatList, StyleSheet, View } from "react-native"
+
 
 interface MenuItem {
   title: string
@@ -24,12 +25,14 @@ const menuItems: MenuItem[] = [
 ]
 
 const AccountScreen = () => {
+  const { user, onLogout } = useAuth()
+  
   return (
     <Screen>
       <View style={styles.container}>
         <ListItem
-          title="Mosh hamedani"
-          subTitle="programmingwithmosh@gmail.com"
+          title={user?.name ? user.name : ""}
+          subTitle={user?.email}
           image={require("@/assets/images/mosh.jpg")}
         />
       </View>
@@ -52,14 +55,12 @@ const AccountScreen = () => {
           )}
         />
       </View>
-      
+
       <ListItem
         title="Log Out"
-        IconComponent={
-            <Icon iconName="logout" backgroundColor="yellow"/>
-        }
+        onPress={onLogout}
+        IconComponent={<Icon iconName="logout" backgroundColor="yellow" />}
       />
-
     </Screen>
   )
 }

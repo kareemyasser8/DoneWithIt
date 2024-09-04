@@ -3,7 +3,7 @@ import listService from "@/app/api/listService"
 import { AxiosProgressEvent } from "axios"
 
 const useAddListing = () => {
-   const addListing = async (
+  const addListing = async (
     listing: ListingForm,
     onUploadProgress: (progress: AxiosProgressEvent) => void
   ) => {
@@ -33,7 +33,9 @@ const useAddListing = () => {
     }
 
     try {
-      await listService.post(data as any, onUploadProgress)
+      await listService.post(data as any, onUploadProgress, {
+        "Content-Type": "multipart/form-data",
+      })
       onUploadProgress
     } catch (error) {
       console.log(error)

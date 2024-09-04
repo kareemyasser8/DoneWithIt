@@ -1,4 +1,5 @@
 import axios, { AxiosProgressEvent } from "axios"
+import authStorage from "@/auth/storage"
 
 const axiosInstance = axios.create({
   baseURL: "http://192.168.1.3:9000/api",
@@ -6,6 +7,17 @@ const axiosInstance = axios.create({
     "Content-Type": "application/json",
   },
 })
+
+axiosInstance.interceptors.request.use(
+  async (config) => {
+    const token = await authStorage.getToken()
+    config.headers["x-auth-token"] = token ? token : ""
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
 
 class APIClient<T> {
   endpoint: string
@@ -26,51 +38,40 @@ class APIClient<T> {
 
   post(
     data: T,
-    onUploadProgress?: (progressPercentage: AxiosProgressEvent) => void
+    onUploadProgress?: (progressPercentage: AxiosProgressEvent) => void,
+    headers?: any
   ) {
     return axiosInstance
       .post<T>(this.endpoint, data, {
         onUploadProgress,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+        headers: headers ? headers : {},
       })
       .then((res) => {
         if (res.data) {
-          return res.data
+          return res.data;
         } else {
-          console.log(res)
-          throw new Error(`Failed to post data: ${res}`)
+          console.log(res);
+          throw new Error(`Failed to post data: ${res}`);
         }
       })
       .catch((error) => {
         // Check if the error is an Axios error
         if (axios.isAxiosError(error)) {
-          // Extract the response information for detailed logging
-          const status = error.response?.status
-          const statusText = error.response?.statusText
-          const data = error.response?.data
-          const headers = error.response?.headers
-
-          // Log detailed error information
-          console.error("Error Status:", status)
-          console.error("Status Text:", statusText)
-          console.error("Response Data:", data)
-          console.error("Response Headers:", headers)
-
-          // Throw a new error with detailed information
-          throw new Error(
-            `Failed to post data: ${status} ${statusText}. Data: ${JSON.stringify(
-              data
-            )}`
-          )
+          // Throw the error message from the response data if available
+          if (error.response?.data?.error) {
+            throw new Error(error.response.data.error);
+          } else {
+            // Otherwise, throw the status text or generic error message
+            throw new Error(error.message || "An unexpected error occurred");
+          }
         } else {
           // Handle other types of errors (non-Axios errors)
-          console.error("Non-Axios error:", error)
-          throw new Error("An unexpected error occurred")
+          console.error("Non-Axios error:", error);
+          throw new Error(error.message || "An unexpected error occurred");
         }
-      })
+      });
   }
+  
 
   patch(id: string, data: Partial<T>) {
     return axiosInstance

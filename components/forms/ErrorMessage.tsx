@@ -6,11 +6,11 @@ import { FormikTouched } from "formik"
 
 interface Props {
   error: any
-  visibile: boolean | FormikTouched<any> | FormikTouched<any>[] | undefined
+  visible: boolean | FormikTouched<any> | FormikTouched<any>[] | undefined
 }
 
-const ErrorMessage = ({ error, visibile }: Props) => {
-  if (!visibile || !error) return null
+const ErrorMessage = ({ error, visible }: Props) => {
+  if (!visible || !error) return null
 
   return <AppText style={styles.error}>{error}</AppText>
 }

@@ -32,7 +32,7 @@ const AppFormField = ({ name, width, icon, ...rest }: Props) => {
         onBlur={() => setFieldTouched(name)}
         onChangeText={(text) => setFieldValue(name, text)}
       />
-      {<ErrorMessage visibile={touched[name]} error={errors[name]} />}
+      {<ErrorMessage visible={touched[name]} error={errors[name]} />}
     </>
   )
 }

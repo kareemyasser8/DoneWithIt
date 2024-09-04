@@ -1,13 +1,17 @@
-import React from "react"
-import { Image, StyleSheet } from "react-native"
-import * as Yup from "yup"
-
-import Screen from "@/components/Screen"
 import {
   AppForm,
   AppFormField,
+  ErrorMessage,
   SubmitButton,
 } from "@/components/forms"
+import routes from "@/components/navigation/routes"
+import Screen from "@/components/Screen"
+import useAuth from "@/auth/useAuth"
+import { useRouter } from "expo-router"
+import React, { useState } from "react"
+import { Image, StyleSheet } from "react-native"
+import * as Yup from "yup"
+import ActivityIndicator from "@/components/ActivityIndicator"
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -15,6 +19,30 @@ const validationSchema = Yup.object().shape({
 })
 
 const LoginScreen = () => {
+  const { onLogin } = useAuth()
+  const [loginFailed, setLoginFailed] = useState(false)
+  const [isloading, setIsLoading] = useState(false)
+  const router = useRouter()
+
+  const handleSubmit = async ({ email, password }: any) => {
+    setIsLoading(true)
+    setLoginFailed(false)
+    try {
+      const res = await onLogin(email, password)
+      if (!res) return setLoginFailed(true)
+      router.navigate(routes.tabs);
+    } catch (error) {
+      setLoginFailed(true)
+      console.log(error)
+    }finally{
+      setIsLoading(false);
+    }
+  }
+
+  if (isloading) {
+    return <ActivityIndicator visible={isloading} />
+  }
+
   return (
     <Screen style={styles.container}>
       <Image
@@ -27,7 +55,7 @@ const LoginScreen = () => {
           password: "",
         }}
         validationSchema={validationSchema}
-        onSubmit={(values) => console.log("hello")}
+        onSubmit={handleSubmit}
       >
         <AppFormField
           placeholder="Email"
@@ -48,7 +76,10 @@ const LoginScreen = () => {
           textContentType="password"
           icon="lock"
         />
-
+        <ErrorMessage
+          visible={loginFailed}
+          error={"Invalid email and/or password."}
+        />
         <SubmitButton title="Login" />
       </AppForm>
     </Screen>

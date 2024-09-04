@@ -28,7 +28,7 @@ const FormImagePicker = ({ name }: { name: string }) => {
         onAddImage={handleAdd}
         onRemoveImage={handleRemove}
       />
-       <ErrorMessage error={errors[name]} visibile={touched[name]} />
+       <ErrorMessage error={errors[name]} visible={touched[name]} />
     </>
   )
 }

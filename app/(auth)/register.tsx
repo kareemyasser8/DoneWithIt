@@ -1,8 +1,17 @@
-import { StyleSheet, Text, View, Image } from "react-native"
-import React from "react"
+import { StyleSheet } from "react-native"
+import React, { useState } from "react"
 import Screen from "@/components/Screen"
-import { AppForm, AppFormField, SubmitButton } from "@/components/forms"
+import {
+  AppForm,
+  AppFormField,
+  ErrorMessage,
+  SubmitButton,
+} from "@/components/forms"
 import * as Yup from "yup"
+import useAuth from "@/auth/useAuth"
+import { router } from "expo-router"
+import routes from "@/components/navigation/routes"
+import ActivityIndicator from "@/components/ActivityIndicator"
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().label("Name"),
@@ -11,8 +20,37 @@ const validationSchema = Yup.object().shape({
 })
 
 const RegisterScreen = () => {
+  const [registerationFailed, setRegisterationFailed] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<any>("")
+  const { onRegister, onLogin } = useAuth()
+  const [isloading, setIsLoading] = useState(false)
+
+  const handleSubmit = async (values: any) => {
+    setIsLoading(true)
+    setRegisterationFailed(false)
+    try {
+      await onRegister(values)
+      await onLogin(values.email, values.password)
+      router.navigate(routes.tabs)
+    } catch (error: any) {
+      setRegisterationFailed(true)
+      setErrorMessage(
+        error instanceof Error
+          ? error.message.substring(7)
+          : "un expected error happened"
+      )
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  if (isloading) {
+    return <ActivityIndicator visible={isloading} />
+  }
+
   return (
     <Screen style={styles.container}>
+      <ErrorMessage visible={registerationFailed} error={errorMessage} />
       <AppForm
         initialValues={{
           name: "",
@@ -20,7 +58,7 @@ const RegisterScreen = () => {
           password: "",
         }}
         validationSchema={validationSchema}
-        onSubmit={(values) => console.log("hello")}
+        onSubmit={handleSubmit}
       >
         <AppFormField
           name="name"
