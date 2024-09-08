@@ -2,17 +2,32 @@ import * as Device from "expo-device"
 import * as Notifications from "expo-notifications"
 import Constants from "expo-constants"
 import { Platform } from "react-native"
+import { router } from "expo-router"
+import routes from "@/components/navigation/routes"
 
 const useNotifications = () => {
   async function schedulePushNotification() {
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: "You've got mail! 📬",
-        body: "Here is the notification body",
-        data: { data: "goes here", test: { test1: "more data" } },
+        title: "You've got message request! 📬",
+        body: "Check out the accounts page",
+        data: {
+          data: "goes here",
+          test: { test1: "more data" },
+          url: routes.account,
+        },
       },
       trigger: { seconds: 2 },
     })
+  }
+
+  function redirect(notification: Notifications.Notification) {
+    const url = notification.request.content.data?.url
+    if (url) {
+      router.navigate(url)
+    } else {
+      router.navigate(routes.account)
+    }
   }
 
   async function registerForPushNotificationsAsync() {
@@ -68,6 +83,7 @@ const useNotifications = () => {
   return {
     schedulePushNotification,
     registerForPushNotificationsAsync,
+    redirect,
   }
 }
 
